@@ -22,4 +22,4 @@ function DataTable(a){
  );
 }
 
-DataTable(1);
+DataTable();
