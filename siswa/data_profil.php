@@ -1,9 +1,16 @@
+<?php
+include "../koneksi_db.php";
+session_start();
+$get_id = $_SESSION['id_akun']; 
+$data = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * FROM SISWA WHERE id_akun = '$get_id'"));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
-  <title>SIPS Siswa &rsaquo; Rincian Pelanggaran</title>
+  <title>SIPS Siswa &rsaquo; Dashboard</title>
   <link rel="stylesheet" href="../dist/modules/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/modules/bootstrap/css/select2.min.css">
   <link rel="stylesheet" href="../dist/modules/bootstrap/css/select2-bootstrap.css">
@@ -33,7 +40,7 @@
             <i class="ion ion-android-person d-lg-none"></i>
             <div class="d-sm-none d-lg-inline-block">Hi, Siswa</div></a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="#" class="dropdown-item has-icon">
+              <a href="proses_logout.php" class="dropdown-item has-icon">
                 <i class="ion ion-log-out"></i> Logout
               </a>
             </div>
@@ -50,22 +57,22 @@
               <img alt="image" src="../dist/img/avatar/avatar.png">
             </div>
             <div class="sidebar-user-details">
-              <div class="user-name">Almira Najah</div>
+              <div class="user-name"><?php echo $_SESSION['nama_pengguna']?></div>
               <div class="user-role">
-                Siswa
+                <?php echo $data['NIS']?>
               </div>
             </div>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Menu</li>
             <li data-toggle="tooltip" data-placement="right" title="" data-original-title="Halaman Utama">
-              <a href="dashboard.html"><i class="ion ion-speedometer"></i><span>Dashboard</span></a>
+              <a href="index.php"><i class="ion ion-speedometer"></i><span>Dashboard</span></a>
             </li>
-            <li data-toggle="tooltip" data-placement="right" data-original-title="Profil Siswa">
-              <a href="data_profil.html"><i class="ion ion-ios-people"></i> Profil</a>
+            <li class="active" data-toggle="tooltip" data-placement="right" data-original-title="Profil Siswa">
+              <a href="data_profil.php"><i class="ion ion-ios-people"></i> Profil</a>
             </li>
-            <li class="active" data-toggle="tooltip" data-placement="right" data-original-title="Data Rincian Pelanggaran">
-              <a href="data_rincian.html"><i class="ion ion-university"></i> Rincian Pelanggaran</a>
+            <li data-toggle="tooltip" data-placement="right" data-original-title="Data Rincian Pelanggaran">
+              <a href="data_rincian.php"><i class="ion ion-university"></i> Rincian Pelanggaran</a>
             </li>
           </ul>
         </aside>
@@ -73,47 +80,76 @@
       <div class="main-content">
         <section class="section">
           <h1 class="section-header">
-            <div>Rincian Pelanggaran</div>
+            <div>Profil Siswa</div>
           </h1>
           <div class="card">
-            <div class="card-header">
-              <div class="float-right">
-              </div>
-              <h4>Tabel Rincian Pelanggaran Siswa</h4>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <form action="detail_seller.html">
-                  <table id="example" class="table table-striped table-bordered" width="100%">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Jenis Pelanggaran</th>
-                        <th>Poin</th>
-                        <th>Tanggal</th>
-                        <th>Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Tidak memakai Dasi</td>
-                        <td>5</td>
-                        <td>04/06/2021</td>
-                        <td>Jangan diulangi!</td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <div class="card-primary">
+              <div class="card-body">
+                <form method="POST" class="needs-validation">
+                  <div class="form-group">
+                    <label>NIS</label>
+                    <h6><?php echo $data['NIS']?></h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <h6><?php echo $data['nama_siswa']?></h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Kelas</label>
+                    <h6><?php echo $data['nama_kelas']?></h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Jurusan</label>
+                    <h6><?php echo $data['nama_jurusan']?></h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Jenis Kelamin</label>
+                    <h6><?php echo $data['jenis_kelamin']?></h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Alamat Rumah</label>
+                    <h6><?php echo $data['alamat']?></h6>
+                  </div>
+                  <div class="form-group">
+                    <label>No. Telepon</label>
+                    <input value="<?php echo $data['no_telepon']?>" type="number" class="form-control" name="no_telepon" tabindex="1" required>
+                  </div><br>
+                  <div class="form-group">
+                    <button type="submit" name="submit" class="btn btn-blue" tabindex="1">
+                      <i class="ion ion-android-checkbox-outline" style="margin-right: 10px"></i>
+                      Simpan
+                    </button>
+                    <?php
+                    include '../koneksi_db.php';
+                    if(isset($_POST['submit'])){
+
+                      $nis = $data['NIS'];
+                      $no_telepon = $_POST['no_telepon'];
+
+                      $edit_data = mysqli_query($koneksi, "UPDATE SISWA SET no_telepon='$no_telepon' WHERE NIS='$nis'");
+                      
+                      if ($edit_data) {
+                        echo "<script>window.alert('Data berhasil diperbarui!');
+                        window.location.href='data_profil.php';
+                        </script>";
+                      }
+                      else {
+                        echo "<script>window.alert('Data gagal diperbarui!');
+                        </script>";
+                      }
+                    }
+                    ?>
+                  </div>
                 </form>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
       <footer class="main-footer">
-        <div class="footer-left">Kelompok RPL SIPS</div>
+        <div class="footer-left">Biro PTI</div>
       </footer>
-    </section>
+    </div>
   </div>
   <script src="../dist/modules/jquery.min.js"></script>
   <script src="../dist/modules/popper.js"></script>
@@ -136,6 +172,5 @@
   <script src="../dist/js/pdfmake.min.js"></script>
   <script src="../dist/modules/summernote/summernote-lite.js"></script>
   <script src="../dist/js/scripts.js"></script>  
-  <script src="../dist/js/custom.js"></script>
 </body>
 </html>

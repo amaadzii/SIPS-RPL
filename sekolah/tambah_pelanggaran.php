@@ -1,9 +1,9 @@
 <?php
 include "../koneksi_db.php";
 session_start();
-$siswa = mysqli_query($koneksi, "SELECT NIS, nama_siswa FROM SISWA");
-$kelas = mysqli_query($koneksi, "SELECT nama_kelas FROM KELAS");
-$jenis_pelanggaran = mysqli_query($koneksi, "SELECT * FROM JENIS_PELANGGARAN");
+$nis_siswa = mysqli_query($koneksi, "SELECT NIS FROM SISWA");
+$data_siswa = mysqli_query($koneksi, "SELECT nama_siswa FROM SISWA");
+$jenis_pelanggaran = mysqli_query($koneksi, "SELECT jenis_pelanggaran FROM JENIS_PELANGGARAN");
 ?>
 
 <!DOCTYPE html>
@@ -97,12 +97,27 @@ $jenis_pelanggaran = mysqli_query($koneksi, "SELECT * FROM JENIS_PELANGGARAN");
               <div class="card-body">
                 <form method="POST" class="needs-validation">
                   <div class="form-group">
+                    <label>NIS</label>
+                    <select name="nis" class="form-control">
+                      <?php
+                      $rows = mysqli_num_rows($nis_siswa);
+                      if($rows > 0){
+                        while($data = mysqli_fetch_array($nis_siswa)){
+                          echo "<option>".$data['NIS']."</option>";
+                        }
+                      }else{
+                        echo "<option> Tidak ada data NIS </option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label>Nama Siswa</label>
                     <select name="nama_siswa" class="form-control">
                       <?php
-                      $rows = mysqli_num_rows($siswa);
+                      $rows = mysqli_num_rows($data_siswa);
                       if($rows > 0){
-                        while($data = mysqli_fetch_array($siswa)){
+                        while($data = mysqli_fetch_array($data_siswa)){
                           echo "<option>".$data['nama_siswa']."</option>";
                         }
                       }else{
@@ -112,34 +127,23 @@ $jenis_pelanggaran = mysqli_query($koneksi, "SELECT * FROM JENIS_PELANGGARAN");
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Kelas</label>
-                    <select name="kelas" class="form-control">
-                      <?php
-                      $rows = mysqli_num_rows($kelas);
-                      if($rows > 0){
-                        while($data = mysqli_fetch_array($kelas)){
-                          echo "<option>".$data['nama_kelas']."</option>";
-                        }
-                      }else{
-                        echo "<option> Tidak ada data kelas </option>";
-                      }
-                      ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
                     <label>Pelanggaran</label>
-                    <select name="id_jenis" class="form-control">
+                    <select name="pelanggaran" class="form-control">
                       <?php
                       $rows = mysqli_num_rows($jenis_pelanggaran);
                       if($rows > 0){
                         while($data = mysqli_fetch_array($jenis_pelanggaran)){
-                          echo "<option value='".$data['id_jenis']."'>".$data['jenis_pelanggaran']."</option>";
+                          echo "<option>".$data['jenis_pelanggaran']."</option>";
                         }
                       }else{
                         echo "<option> Tidak ada jenis pelanggaran </option>";
                       }
                       ?>
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Poin</label>
+                    <input type="number" class="form-control" name="poin" tabindex="1" required>
                   </div>
                   <div class="form-group">
                     <label>Keterangan</label>
@@ -158,14 +162,14 @@ $jenis_pelanggaran = mysqli_query($koneksi, "SELECT * FROM JENIS_PELANGGARAN");
                     include "../koneksi_db.php";
                     if(isset($_POST['submit'])){
 
-                      $nama_siswa = $_POST['nama_siswa']; // value = NIS
-                      $id = $_POST['id_jenis'];
-
-                      $nama_kelas = $_POST['kelas'];
+                      $nis = $_POST['nis'];
+                      $nama_siswa = $_POST['nama_siswa'];
+                      $pelanggaran = $_POST['pelanggaran'];
+                      $poin = $_POST['poin'];
                       $keterangan = $_POST['keterangan'];
                       $tanggal = date("Y-m-d", strtotime($_POST['tanggal']));
 
-                      $simpan_data = mysqli_query($koneksi, "INSERT INTO PELANGGARAN_SISWA (nama_siswa, nama_kelas, jenis_pelanggaran, poin, keterangan, tanggal) VALUES ('$nama_siswa', '$nama_kelas', '$pelanggaran', '$poin', '$keterangan', '$tanggal')");
+                      $simpan_data = mysqli_query($koneksi, "INSERT INTO PELANGGARAN_SISWA (NIS, nama_siswa, jenis_pelanggaran, poin, keterangan, tanggal) VALUES ('$nis', '$nama_siswa', '$pelanggaran', '$poin', '$keterangan', '$tanggal')");
 
                       if ($simpan_data) {
                         echo "<script>window.alert('Data berhasil disimpan!');

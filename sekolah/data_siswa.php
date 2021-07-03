@@ -126,6 +126,7 @@ $query = mysqli_query($koneksi,"SELECT * FROM SISWA");
                       <th>Nama</th>
                       <th>Kelas</th>
                       <th>Jurusan</th>
+                      <th>Total Poin</th>
                       <?php
                       if($_SESSION['role'] == "Admin") {
                         echo "<th>Aksi</th>";
@@ -144,7 +145,8 @@ $query = mysqli_query($koneksi,"SELECT * FROM SISWA");
                       <td>".$NIS."</td>
                       <td>".$data['nama_siswa']."</td>
                       <td>".$data['nama_kelas']."</td>
-                      <td>".$data['nama_jurusan']."</td>";
+                      <td>".$data['nama_jurusan']."</td>
+                      <td>".$data['total_poin']."</td>";
 
                       if($_SESSION['role'] == "Admin") {
                         echo "<td>

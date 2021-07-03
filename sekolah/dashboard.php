@@ -1,10 +1,10 @@
 <?php
 include "../koneksi_db.php";
 $tanggal = date("d/m/Y");
-$total_siswa = mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM SISWA");
-$total_kelas = mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM KELAS");
-$total_jenis = mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM JENIS_PELANGGARAN");
-$total_pelanggaran = mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM PELANGGARAN_SISWA");
+$total_siswa = mysqli_fetch_array(mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM SISWA"));
+$total_kelas = mysqli_fetch_array(mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM KELAS"));
+$total_jenis = mysqli_fetch_array(mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM JENIS_PELANGGARAN"));
+$total_pelanggaran = mysqli_fetch_array(mysqli_query($koneksi,"SELECT COUNT(*) AS total FROM PELANGGARAN_SISWA"));
 $sanksi = mysqli_query($koneksi,"SELECT * FROM SANKSI");
 ?>
 
@@ -118,11 +118,7 @@ $sanksi = mysqli_query($koneksi,"SELECT * FROM SANKSI");
                   <h4>Total Siswa</h4>
                 </div>
                 <div class="card-body">
-                  <?php
-                  while($data = mysqli_fetch_assoc($total_siswa)){
-                    echo $data['total'];
-                  }
-                  ?>
+                  <?php echo $total_siswa['total']; ?>
                 </div>
               </div>
             </div>
@@ -137,11 +133,7 @@ $sanksi = mysqli_query($koneksi,"SELECT * FROM SANKSI");
                   <h4>Total Kelas</h4>
                 </div>
                 <div class="card-body">
-                  <?php
-                  while($data = mysqli_fetch_assoc($total_kelas)){
-                    echo $data['total'];
-                  }
-                  ?>
+                  <?php echo $total_kelas['total']; ?>
                 </div>
               </div>
             </div>
@@ -156,11 +148,7 @@ $sanksi = mysqli_query($koneksi,"SELECT * FROM SANKSI");
                   <h4>Jenis Pelanggaran</h4>
                 </div>
                 <div class="card-body">
-                  <?php
-                  while($data = mysqli_fetch_assoc($total_jenis)){
-                    echo $data['total'];
-                  }
-                  ?>
+                  <?php echo $total_jenis['total']; ?>
                 </div>
               </div>
             </div>
@@ -177,9 +165,7 @@ $sanksi = mysqli_query($koneksi,"SELECT * FROM SANKSI");
             <h4>Pelanggaran Siswa</h4>
             </div>
             <div class="card-body">';
-            while($data = mysqli_fetch_assoc($total_pelanggaran)){
-              echo $data['total'];
-            }
+            echo $total_pelanggaran['total'];
             echo '</div>
             </div>
             </div>

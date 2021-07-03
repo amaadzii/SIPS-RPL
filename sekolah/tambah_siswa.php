@@ -103,7 +103,7 @@ $kelas = mysqli_query($koneksi, "SELECT nama_kelas as kelas FROM KELAS");
                   </div>
                   <div class="form-group">
                     <label>Kelas</label>
-                    <select name="kelas" class="form-control">
+                    <select name="nama_kelas" class="form-control">
                       <?php
                       $rows = mysqli_num_rows($kelas);
                       if($rows > 0){
@@ -118,7 +118,7 @@ $kelas = mysqli_query($koneksi, "SELECT nama_kelas as kelas FROM KELAS");
                   </div>
                   <div class="form-group">
                     <label>Jurusan</label>
-                    <select name="jurusan" class="form-control">
+                    <select name="nama_jurusan" class="form-control">
                       <?php
                       $rows = mysqli_num_rows($jurusan);
                       if($rows > 0){
@@ -170,8 +170,8 @@ $kelas = mysqli_query($koneksi, "SELECT nama_kelas as kelas FROM KELAS");
 
                       $nis = $_POST['nis'];
                       $nama_siswa = $_POST['nama_siswa'];
-                      $nama_kelas = $_POST['kelas'];
-                      $nama_jurusan = $_POST['jurusan'];
+                      $nama_kelas = $_POST['nama_kelas'];
+                      $nama_jurusan = $_POST['nama_jurusan'];
                       $alamat = $_POST['alamat'];
                       $jenis_kelamin = $_POST['jenis_kelamin'];
                       $no_telepon = $_POST['no_telepon'];
@@ -179,7 +179,7 @@ $kelas = mysqli_query($koneksi, "SELECT nama_kelas as kelas FROM KELAS");
                       $username = $_POST['username'];
                       $password = $_POST['password'];
 
-                      $simpan_data = mysqli_query($koneksi, "INSERT INTO SISWA  VALUES ('$nis', '$nama_siswa', '$nama_kelas', '$nama_jurusan', '$alamat', '$jenis_kelamin', '$id_akun', '$no_telepon', 0)");
+                      $simpan_data = mysqli_query($koneksi, "INSERT INTO SISWA VALUES ('$nis', '$nama_siswa', '$nama_kelas', '$nama_jurusan', '$jenis_kelamin', '$alamat', '$no_telepon', '$id_akun', 0)");
 
                       $simpan_akun = mysqli_query($koneksi, "INSERT INTO USER VALUES ('$id_akun', '$nama_siswa', '$username', '$password', 'Siswa')");
 

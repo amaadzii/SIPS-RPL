@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
-  <title>SIPS Sekolah &rsaquo; Login</title>
+  <title>SIPS Siswa &rsaquo; Login</title>
   <link rel="stylesheet" href="../dist/modules/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/modules/ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
@@ -20,7 +20,7 @@
             <div class="card card-primary">
               <div class="card-header"><h4>Login</h4></div>
               <div class="card-body">
-                <form method="POST" action="proses/proses_login.php" class="needs-validation" novalidate="">
+                <form method="POST" action="proses_login.php" class="needs-validation" novalidate="">
                   <div class="form-group">
                     <label>Username</label>
                     <input type="text" class="form-control" name="username" tabindex="1" required autofocus>

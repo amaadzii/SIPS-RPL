@@ -126,7 +126,7 @@ $query = mysqli_query($koneksi,"SELECT * FROM PELANGGARAN_SISWA");
                       <td>".date("d/m/Y", strtotime($data['tanggal']))."</td>";
 
                       echo "<td>
-                      <a href='edit_pelanggaran.php' class='btn btn-sm btn-blue' style='margin: 5px'>
+                      <a href='edit_pelanggaran.php?id=$id_pelanggaran' class='btn btn-sm btn-blue' style='margin: 5px'>
                       <span class='ion-android-create' aria-hidden='true'></span>
                       </a>
                       <a href='proses/hapus_pelanggaran.php?id=$id_pelanggaran' class='btn btn-sm btn-danger' style='margin: 5px'>

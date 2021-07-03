@@ -106,12 +106,12 @@ $data = mysqli_fetch_array($query);
                   </div>
                   <div class="form-group">
                     <label>Kelas</label>
-                    <select name="kelas" class="form-control">
+                    <select name="nama_kelas" class="form-control">
                       <?php
                       $rows = mysqli_num_rows($kelas);
                       if($rows > 0){
-                        while($nama = mysqli_fetch_array($kelas)){
-                          echo "<option>".$nama['kelas']."</option>";
+                        while($data_kelas = mysqli_fetch_array($kelas)){
+                          echo "<option>".$data_kelas['kelas']."</option>";
                         }
                       }else{
                         echo "<option>".$data['kelas']."</option>";
@@ -121,12 +121,12 @@ $data = mysqli_fetch_array($query);
                   </div>
                   <div class="form-group">
                     <label>Jurusan</label>
-                    <select name="jurusan" class="form-control">
+                    <select name="nama_jurusan" class="form-control">
                       <?php
                       $rows = mysqli_num_rows($jurusan);
                       if($rows > 0){
-                        while($nama = mysqli_fetch_array($jurusan)){
-                          echo "<option>".$nama['jurusan']."</option>";
+                        while($data_jurusan = mysqli_fetch_array($jurusan)){
+                          echo "<option>".$data_jurusan['jurusan']."</option>";
                         }
                       }else{
                         echo "<option>".$data['jurusan']."</option>";
@@ -159,13 +159,13 @@ $data = mysqli_fetch_array($query);
                     if(isset($_POST['submit'])){
 
                       $nama_siswa = $_POST['nama_siswa'];
-                      $nama_kelas = $_POST['kelas'];
-                      $nama_jurusan = $_POST['jurusan'];
+                      $nama_kelas = $_POST['nama_kelas'];
+                      $nama_jurusan = $_POST['nama_jurusan'];
                       $alamat = $_POST['alamat'];
                       $jenis_kelamin = $_POST['jenis_kelamin'];
                       $no_telepon = $_POST['no_telepon'];
 
-                      $edit_data = mysqli_query($koneksi, "UPDATE SISWA SET nama_siswa='$nama_siswa', nama_kelas='$nama_kelas', nama_jurusan='$jurusan', alamat='$alamat', jenis_kelamin='$jenis_kelamin', no_telepon='$no_telepon' WHERE NIS='$nis'");
+                      $edit_data = mysqli_query($koneksi, "UPDATE SISWA SET nama_siswa='$nama_siswa', nama_kelas='$nama_kelas', nama_jurusan='$nama_jurusan', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_telepon='$no_telepon' WHERE NIS='$nis'");
                       
                       if ($edit_data) {
                         echo "<script>window.alert('Data berhasil diperbarui!');
